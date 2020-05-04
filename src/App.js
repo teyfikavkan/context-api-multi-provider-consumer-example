@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import GlobalContext from "./context/GlobalContext";
+import SubContext from "./context/SubContext";
+import globalReducer from "./reducers/globalReducer";
+import subReducer from "./reducers/subReducer";
+import subSecondReducer from "./reducers/subSecondReducer";
+import SubSecondContext from "./context/SubSecondContext";
+
+import  NewPersonWelcomingView from "./views/NewPersonWelcomingView"
+import  AddPersonToList from "./components/AddPersonToList"
+import  PersonListView from "./views/PersonListView"
+import NumberOfPersonView from "./views/NumberOfPersonView";
+import PersonBioView from "./views/PersonBioView";
 
 function App() {
+  const globalValue = globalReducer();
+  const subValue = subReducer();
+  const subSecondValue = subSecondReducer();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <GlobalContext.Provider value={globalValue}>
+        <SubContext.Provider value={subValue}>
+          <NewPersonWelcomingView/>
+          <AddPersonToList/>
+          <NumberOfPersonView/>
+          <PersonListView/>
+        </SubContext.Provider>
+        <SubSecondContext.Provider value={subSecondValue}>
+          <PersonBioView/>
+        </SubSecondContext.Provider>
+      </GlobalContext.Provider>
   );
 }
 
